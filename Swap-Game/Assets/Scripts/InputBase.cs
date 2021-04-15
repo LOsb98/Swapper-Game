@@ -10,6 +10,10 @@ public abstract class InputBase : MonoBehaviour
     public abstract void Step();
     //When the player dies the game ends, when an AI dies the score is increased
     public abstract void Die();
+    //TODO: Might be good to implement an OnAwake() method
+    //Can make sure all initialization code is done in one method call + set the order to prevent bugs
+    //Especially for the PlayerInput control setup
+
     private GameManager gameManager;
     protected Attack attack;
     protected Movement movement;

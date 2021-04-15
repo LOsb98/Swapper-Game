@@ -23,6 +23,7 @@ public class CharacterManager : MonoBehaviour
         //For attacks, things like fire rate and projectiles can be passed into the Attack script beforehand
         //The input scripts can then call a method to attempt an attack when necessary, all other logic is handled in the Attack script separately
         //May need to pass in an "aim direction" Vector2
+        IsPlayer = true;
         GetComponent<SpriteRenderer>().sprite = charData.sprite;
         GetComponent<Movement>().speed = charData.speed;
         SetPlayer();
@@ -31,9 +32,9 @@ public class CharacterManager : MonoBehaviour
     void Update()
     {
         input.Step();
-        if (Input.GetKeyDown("r")) IsPlayer = !IsPlayer;
     }
 
+    //Keeping this as a separate method that can be called from other scripts later
     private void SetPlayer()
     {
         if (IsPlayer) input = GetComponent<PlayerInput>();
