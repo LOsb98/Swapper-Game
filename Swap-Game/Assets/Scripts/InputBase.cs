@@ -10,18 +10,20 @@ public abstract class InputBase : MonoBehaviour
     public abstract void Step();
     //When the player dies the game ends, when an AI dies the score is increased
     public abstract void Die();
-    //TODO: Might be good to implement an OnAwake() method
-    //Can make sure all initialization code is done in one method call + set the order to prevent bugs
-    //Especially for the PlayerInput control setup
+    //Used for Awake method on child classes
+    protected abstract void OnAwake();
 
-    private GameManager gameManager;
+    protected GameManager gameManager;
+    protected CharacterManager charManager;
     protected Attack attack;
     protected Movement movement;
 
-    void Start()
+    void Awake()
     {
+        OnAwake();
         //FindObjectWithTag() is better than GameObject.Find() as it doesn't need the name of the object, which may change later on
         //FindObjectOfType() is apparently very slow
+        charManager = GetComponent<CharacterManager>();
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         attack = GetComponent<Attack>();
         movement = GetComponent<Movement>();

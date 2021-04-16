@@ -11,6 +11,11 @@ public class AIInput : InputBase
     private float moveTimer;
     public float moveTime;
 
+    protected override void OnAwake()
+    {
+
+    }
+
     public override void Step()
     {
         movement.Move(moveDir);

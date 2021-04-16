@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 6b6f67ae7fc7d2b43b66a86581a74da9, type: 3}
   health: 5
-  speed: 5
+  speed: 4
   fireRate: 0.75
+  projectile: {fileID: 0}
