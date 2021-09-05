@@ -11,11 +11,6 @@ public class AIInput : InputBase
     private float moveTimer;
     public float moveTime;
 
-    protected override void OnAwake()
-    {
-
-    }
-
     public override void Step()
     {
         movement.Move(moveDir);
@@ -33,6 +28,7 @@ public class AIInput : InputBase
 
     public override void Die()
     {
+        GameManager.Instance.AddScore(0);
         //Increase the player's score
     }
 }

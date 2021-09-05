@@ -6,12 +6,14 @@ using UnityEngine.InputSystem;
 //This allows the player to control the character directly
 public class PlayerInput : InputBase, InputActionMaps.IPlayerActions
 {
+    [SerializeField] private float _swapRange;
+
     public InputActionMaps controls;
     private Vector2 moveVector;
     private Vector3 aimDir;
     public LayerMask swapLayer;
 
-    protected override void OnAwake()
+    private void Awake()
     {
         //Began implementing the newer Unity input package
         //The input package is horrid and evil but it makes setting up multiple input devices easier in the long-term
@@ -43,8 +45,10 @@ public class PlayerInput : InputBase, InputActionMaps.IPlayerActions
         controls.Player.Swap.performed += ctx =>
         {
             //This checks all the objects along the raycast, then checks which one is closer
-            RaycastHit2D[] swapCheck = Physics2D.RaycastAll(transform.position, aimDir, 15, swapLayer);
+            RaycastHit2D[] swapCheck = Physics2D.RaycastAll(transform.position, aimDir, _swapRange, swapLayer);
+
             GameObject closestObj = null;
+
             foreach(var obj in swapCheck)
             {
                 if(obj.collider.gameObject.name != gameObject.name)
@@ -60,8 +64,7 @@ public class PlayerInput : InputBase, InputActionMaps.IPlayerActions
             //Otherwise, if the raycast doesn't hit anything, it returns an error as it tries to print the name of a non-existant object
             if (closestObj != null)
             {
-                closestObj.GetComponent<CharacterManager>().IsPlayer = true;
-                charManager.IsPlayer = false;
+                GameManager.Instance.SetNewPlayer(closestObj);
                 print("Swapped to " + closestObj.name);
             } 
         };
@@ -75,13 +78,13 @@ public class PlayerInput : InputBase, InputActionMaps.IPlayerActions
 
     public override void Die()
     {
-        //End the game
+        GameManager.Instance.EndGame();
     }
 
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position, aimDir * 15);
+        Gizmos.DrawRay(transform.position, aimDir * _swapRange);
     }
 
     #region Will get errors if these methods are taken out, just leave them in so the input package cooperates
