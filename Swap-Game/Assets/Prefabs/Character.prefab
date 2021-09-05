@@ -123,7 +123,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b11c4c48e9f28c46a2169093e7fef17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  charData: {fileID: 11400000, guid: e441b904bf53e9a41a4ff6015aec685f, type: 2}
+  _health: 0
+  _characterData: {fileID: 0}
+  _spriteRenderer: {fileID: 1728882891873335665}
+  _movement: {fileID: 1728882891873335667}
+  _playerInput: {fileID: 1728882891873335669}
+  _aiInput: {fileID: 1728882891873335668}
 --- !u!114 &1728882891873335667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,6 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2a184c4cdf0a5b45a3eb71809b86d84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _swapRange: 0
   swapLayer:
     serializedVersion: 2
     m_Bits: 8

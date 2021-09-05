@@ -123,11 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &127155572 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1728882891873335662, guid: e676b0c7c0a13b646b822acc5b80202f, type: 3}
-  m_PrefabInstance: {fileID: 1728882893632034432}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &146933388
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,7 +324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -476,9 +471,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52678259459fcde4f9c9ccd37f3e662c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  score: 0
-  currentPlayer: {fileID: 127155572}
-  playerIcon: {fileID: 1645367185}
+  _playerIcon: {fileID: 0}
+  _score: 0
 --- !u!4 &1015595800
 Transform:
   m_ObjectHideFlags: 0
