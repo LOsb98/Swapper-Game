@@ -4,21 +4,16 @@ using UnityEngine;
 
 public class CharacterManager : MonoBehaviour
 {
-    public Character charData;
-    private InputBase currentInput;
-    private InputBase playerInput;
-    private InputBase aiInput;
-    private GameManager gameManager;
-    private bool isPlayer;
-    public bool IsPlayer
-    {
-        get { return isPlayer; }
-        set
-        {
-            isPlayer = value;
-            SetPlayer();
-        }
-    }
+    [SerializeField] private int _health;
+    [SerializeField] private Character _characterData;
+    [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private Movement _movement;
+
+    [SerializeField] private InputBase _playerInput;
+    [SerializeField] private InputBase _aiInput;
+
+    private InputBase _currentInput;
+
 
     void Awake()
     {
@@ -26,34 +21,21 @@ public class CharacterManager : MonoBehaviour
         //For attacks, things like fire rate and projectiles can be passed into the Attack script beforehand
         //The input scripts can then call a method to attempt an attack when necessary, all other logic is handled in the Attack script separately
         //May need to pass in an "aim direction" Vector2
-        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-        playerInput = GetComponent<PlayerInput>();
-        aiInput = GetComponent<AIInput>();
-        GetComponent<SpriteRenderer>().sprite = charData.sprite;
-        GetComponent<Movement>().speed = charData.speed;
-        SetPlayer();
+        _health = _characterData.health;
+        _spriteRenderer.sprite = _characterData.sprite;
+        _movement.speed = _characterData.speed;
+
     }
 
     void Update()
     {
-        currentInput.Step();
+        _currentInput.Step();
     }
 
     //Keeping this as a separate method that can be called from other scripts later
-    private void SetPlayer()
+    public void SetPlayerControl(bool enabled)
     {
-        if (IsPlayer)
-        {
-            currentInput = playerInput;
-            gameManager.currentPlayer = gameObject;
-            playerInput.enabled = true;
-            aiInput.enabled = false;
-        }
-        else 
-        {
-            currentInput = aiInput;
-            playerInput.enabled = false;
-            aiInput.enabled = true;
-        } 
+        _playerInput.enabled = enabled;
+        //aiInput.enabled = !enabled;
     }
 }
