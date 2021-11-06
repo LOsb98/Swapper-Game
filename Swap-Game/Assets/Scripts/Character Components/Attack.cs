@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Attack : MonoBehaviour
+namespace SwapGame.CharacterComponents
 {
-    public void StartAttack()
+    public class Attack : MonoBehaviour
     {
-        print("Attacked");
+        public void StartAttack()
+        {
+            print("Attacked");
+        }
     }
 }
