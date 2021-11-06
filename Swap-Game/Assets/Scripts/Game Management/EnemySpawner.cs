@@ -2,44 +2,47 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour
+namespace SwapGame.GameManagement
 {
-    [SerializeField] private GameObject _characterBase;
-    [SerializeField] private float _enemySpawnTime;
-    private float _enemySpawnTimer;
-
-    private Vector2 screenBounds;
-
-    private void Start()
+    public class EnemySpawner : MonoBehaviour
     {
-        screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
-    }
+        [SerializeField] private GameObject _characterBase;
+        [SerializeField] private float _enemySpawnTime;
+        private float _enemySpawnTimer;
 
-    void Update()
-    {
-        if (_enemySpawnTimer > 0)
+        private Vector2 screenBounds;
+
+        private void Start()
         {
-            _enemySpawnTimer -= Time.deltaTime;
-            return;
+            screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
         }
 
-        SpawnEnemy(NewSpawnPosition());
-        _enemySpawnTimer = _enemySpawnTime;
-    }
+        void Update()
+        {
+            if (_enemySpawnTimer > 0)
+            {
+                _enemySpawnTimer -= Time.deltaTime;
+                return;
+            }
 
-    private Vector2 NewSpawnPosition()
-    {
-        Vector2 enemySpawnPos;
-        enemySpawnPos.x = Random.Range(-screenBounds.x + 2, screenBounds.x - 2);
-        enemySpawnPos.y = Random.Range(-screenBounds.y + 2, screenBounds.y - 2);
+            SpawnEnemy(NewSpawnPosition());
+            _enemySpawnTimer = _enemySpawnTime;
+        }
 
-        return enemySpawnPos;
-    }
+        private Vector2 NewSpawnPosition()
+        {
+            Vector2 enemySpawnPos;
+            enemySpawnPos.x = Random.Range(-screenBounds.x + 2, screenBounds.x - 2);
+            enemySpawnPos.y = Random.Range(-screenBounds.y + 2, screenBounds.y - 2);
 
-    private void SpawnEnemy(Vector2 spawnPosition)
-    {
-        GameObject newEnemy = Instantiate(_characterBase);
+            return enemySpawnPos;
+        }
 
-        newEnemy.transform.position = spawnPosition;
+        private void SpawnEnemy(Vector2 spawnPosition)
+        {
+            GameObject newEnemy = Instantiate(_characterBase);
+
+            newEnemy.transform.position = spawnPosition;
+        }
     }
 }

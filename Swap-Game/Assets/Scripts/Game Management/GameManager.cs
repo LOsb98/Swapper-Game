@@ -1,74 +1,78 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SwapGame.CharacterComponents;
 
-public class GameManager : MonoBehaviour
+namespace SwapGame.GameManagement
 {
-    [SerializeField] private GameObject _playerIcon;
-
-    [SerializeField] private float _score;
-
-    [SerializeField] private GameObject _currentPlayer;
-
-    private static GameManager _instance;
-
-    public static GameManager Instance { get { return _instance; } }
-
-    public GameObject CurrentPlayer => _currentPlayer;
-
-
-    //An error comes up if this is assigned to the first instance of the Character object
-    //i.e. If this =  Character, the error comes up
-    //If this = Character(1), no error
-    //The game still runs as normal regardless (it seems)
-
-    private void Awake()
+    public class GameManager : MonoBehaviour
     {
-        if (_instance != null && _instance != this)
+        [SerializeField] private GameObject _playerIcon;
+
+        [SerializeField] private float _score;
+
+        [SerializeField] private GameObject _currentPlayer;
+
+        private static GameManager _instance;
+
+        public static GameManager Instance { get { return _instance; } }
+
+        public GameObject CurrentPlayer => _currentPlayer;
+
+
+        //An error comes up if this is assigned to the first instance of the Character object
+        //i.e. If this =  Character, the error comes up
+        //If this = Character(1), no error
+        //The game still runs as normal regardless (it seems)
+
+        private void Awake()
         {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            _instance = this;
-        }
-    }
-
-    void Start()
-    {
-        //This needs to be done in Start() and not Awake()
-        //The execution order will try and call SetPlayer() on the CharacterManager before it has finished getting all its compoment references
-        //It will throw an error + the PlayerIcon will not track the player (only in the build version?)
-        SetNewPlayer(CurrentPlayer);
-    }
-
-    void Update()
-    {
-        //Increment timers for spawning enemies
-        _playerIcon.transform.position = CurrentPlayer.transform.position;
-    }
-    
-    public void SetNewPlayer(GameObject newPlayer)
-    {
-        if (CurrentPlayer != null)
-        {
-            var currentCharManager = CurrentPlayer.GetComponent<CharacterManager>();
-            currentCharManager.SetAIControl();
+            if (_instance != null && _instance != this)
+            {
+                Destroy(this.gameObject);
+            }
+            else
+            {
+                _instance = this;
+            }
         }
 
-        var newCharManager = newPlayer.GetComponent<CharacterManager>();
-        newCharManager.SetPlayerControl();
+        void Start()
+        {
+            //This needs to be done in Start() and not Awake()
+            //The execution order will try and call SetPlayer() on the CharacterManager before it has finished getting all its compoment references
+            //It will throw an error + the PlayerIcon will not track the player (only in the build version?)
+            SetNewPlayer(CurrentPlayer);
+        }
 
-        _currentPlayer = newPlayer;
-    }
+        void Update()
+        {
+            //Increment timers for spawning enemies
+            _playerIcon.transform.position = CurrentPlayer.transform.position;
+        }
 
-    public void AddScore(int score)
-    {
+        public void SetNewPlayer(GameObject newPlayer)
+        {
+            if (CurrentPlayer != null)
+            {
+                var currentCharManager = CurrentPlayer.GetComponent<CharacterManager>();
+                currentCharManager.SetAIControl();
+            }
 
-    }
+            var newCharManager = newPlayer.GetComponent<CharacterManager>();
+            newCharManager.SetPlayerControl();
 
-    public void EndGame()
-    {
-        //Logic for ending the game
+            _currentPlayer = newPlayer;
+        }
+
+        public void AddScore(int score)
+        {
+
+        }
+
+        public void EndGame()
+        {
+            //Logic for ending the game
+        }
     }
 }

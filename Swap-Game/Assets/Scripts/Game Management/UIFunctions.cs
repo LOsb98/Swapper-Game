@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIFunctions : MonoBehaviour
+namespace SwapGame.GameManagement
 {
-    public void Exit()
+    public class UIFunctions : MonoBehaviour
     {
-        Application.Quit();
+        public void Exit()
+        {
+            Application.Quit();
+        }
     }
 }
