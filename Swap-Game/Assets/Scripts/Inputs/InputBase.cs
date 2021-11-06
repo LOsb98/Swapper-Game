@@ -6,13 +6,16 @@ using UnityEngine;
 //The CharacterManager will switch between each
 public abstract class InputBase : MonoBehaviour
 {
+    [SerializeField] protected Movement movement;
+
+    protected GameManager _gameManager;
+    protected CharacterManager _charManager;
+    protected Attack _attack;
+
     //Step() is essentially the update function for the input classes
     public abstract void Step();
+
     //When the player dies the game ends, when an AI dies the score is increased
     public abstract void Die();
 
-    protected GameManager gameManager;
-    protected CharacterManager charManager;
-    protected Attack attack;
-    protected Movement movement;
 }

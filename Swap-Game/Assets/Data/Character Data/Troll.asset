@@ -10,10 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c032446bfd14857449b6f5192f99b597, type: 3}
-  m_Name: Necromancer
+  m_Name: Troll
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 6b6f67ae7fc7d2b43b66a86581a74da9, type: 3}
-  health: 5
-  speed: 4
-  fireRate: 0.75
-  projectile: {fileID: 0}
+  _sprite: {fileID: 21300000, guid: 2e066480cce86d240ae8f5017f1769a9, type: 3}
+  _health: 10
+  _speed: 2
+  _fireRate: 0.8
+  _projectile: {fileID: 0}
+  _size: {x: 1, y: 2}
+  _spawnRate: 90
