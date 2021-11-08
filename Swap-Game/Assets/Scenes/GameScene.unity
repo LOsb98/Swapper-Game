@@ -564,7 +564,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _characterBase: {fileID: 1728882891873335662, guid: e676b0c7c0a13b646b822acc5b80202f, type: 3}
-  _enemySpawnTime: 2
+  _enemySpawnTime: 6
 --- !u!1 &1019777309
 GameObject:
   m_ObjectHideFlags: 0
@@ -1251,6 +1251,10 @@ PrefabInstance:
       propertyPath: _characterData
       value: 
       objectReference: {fileID: 11400000, guid: e441b904bf53e9a41a4ff6015aec685f, type: 2}
+    - target: {fileID: 1728882891873335663, guid: e676b0c7c0a13b646b822acc5b80202f, type: 3}
+      propertyPath: _currentCharacter
+      value: 
+      objectReference: {fileID: 11400000, guid: dde8560ea54840f46a21077ea41cd111, type: 2}
     - target: {fileID: 1728882891873335666, guid: e676b0c7c0a13b646b822acc5b80202f, type: 3}
       propertyPath: m_RootOrder
       value: 2
