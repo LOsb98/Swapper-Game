@@ -12,9 +12,7 @@ namespace SwapGame.Inputs
     {
         [SerializeField] private float _swapRange;
         [SerializeField] private LayerMask _swapLayer;
-        [SerializeField] private Attack _attackScript;
 
-        private Vector2 _moveVector;
         private Vector3 _aimDirection;
         private bool _attacking;
 
@@ -23,7 +21,7 @@ namespace SwapGame.Inputs
 
         private void Awake()
         {
-            _attackScript.enabled = true;
+            _attack.enabled = true;
 
             //Began implementing the newer Unity input package
             //The input package is horrid and evil but it makes setting up multiple input devices easier in the long-term
@@ -31,8 +29,8 @@ namespace SwapGame.Inputs
             _controls.Player.SetCallbacks(this);
 
             #region Left stick/WASD
-            _controls.Player.Move.performed += ctx => _moveVector = ctx.ReadValue<Vector2>();
-            _controls.Player.Move.canceled += ctx => _moveVector = Vector2.zero;
+            _controls.Player.Move.performed += ctx => _moveDirection = ctx.ReadValue<Vector2>();
+            _controls.Player.Move.canceled += ctx => _moveDirection = Vector2.zero;
             #endregion
 
             #region Right stick/Mouse
@@ -68,7 +66,7 @@ namespace SwapGame.Inputs
 
                     if (foundObject != gameObject)
                     {
-                        if (closestObj == null || obj.distance < Vector2.Distance(closestObj.transform.position, pos))
+                        if (!closestObj|| obj.distance < Vector2.Distance(closestObj.transform.position, pos))
                         {
                         //closestObj stores whichever object is closest as of the current iteration
                         closestObj = foundObject;
@@ -89,18 +87,11 @@ namespace SwapGame.Inputs
 
         public override void Step()
         {
-            movement.Move(_moveVector);
+            movement.Move(_moveDirection);
+
             if (_attacking)
             {
-                AttemptAttack();
-            }
-        }
-
-        public override void AttemptAttack()
-        {
-            if (_attackScript.AttackReady())
-            {
-                _attackScript.FireProjectile(_aimDirection);
+                _attack.TryNewAttack(_aimDirection);
             }
         }
 

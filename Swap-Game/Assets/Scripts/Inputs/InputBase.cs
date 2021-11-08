@@ -12,6 +12,7 @@ namespace SwapGame.Inputs
     {
         [SerializeField] protected Movement movement;
 
+        [SerializeField] protected Vector2 _moveDirection;
         protected GameManager _gameManager;
         protected CharacterManager _charManager;
         protected Attack _attack;
@@ -20,11 +21,6 @@ namespace SwapGame.Inputs
         /// Step() is essentially the update function for the input classes
         /// </summary>
         public abstract void Step();
-
-        /// <summary>
-        /// Attempt an attack when the input is made, or the AI is ready
-        /// </summary>
-        public abstract void AttemptAttack();
 
         /// <summary>
         /// When the player dies the game ends, when an AI dies the score is increased
