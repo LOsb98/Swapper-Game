@@ -22,9 +22,13 @@ namespace SwapGame.Inputs
         public abstract void Step();
 
         /// <summary>
+        /// Attempt an attack when the input is made, or the AI is ready
+        /// </summary>
+        public abstract void AttemptAttack();
+
+        /// <summary>
         /// When the player dies the game ends, when an AI dies the score is increased
         /// </summary>
         public abstract void Die();
-
     }
 }

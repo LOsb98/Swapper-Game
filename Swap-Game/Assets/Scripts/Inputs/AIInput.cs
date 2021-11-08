@@ -26,6 +26,22 @@ namespace SwapGame.Inputs
             }
         }
 
+        public override void AttemptAttack()
+        {
+
+        }
+
+        private Vector2 FindPlayerDirection()
+        {
+            GameManager gameManager = GameManager.Instance;
+            GameObject player = gameManager.CurrentPlayer;
+
+
+            Vector2 playerDirection = transform.position - player.transform.position;
+
+            return playerDirection;
+        }
+
         public override void Die()
         {
             GameManager.Instance.AddScore(0);
