@@ -26,20 +26,13 @@ namespace SwapGame.CharacterComponents
             }
         }
 
-        public bool AttackReady()
+        public void TryNewAttack(Vector3 aimDirection)
         {
             if (_attackTimer > 0)
             {
-                return false;
+                return;
             }
-            else
-            {
-                return true;
-            }
-        }
 
-        public void FireProjectile(Vector3 aimDirection)
-        {
             Debug.Log("Firing projectile");
             Vector3 projectileSpawnPos = transform.position + (aimDirection * _projectileSpawnDistance);
             GameObject newProjectile = Instantiate(_projectilePrefab, projectileSpawnPos, Quaternion.Euler(0f, 0f, 0f));
