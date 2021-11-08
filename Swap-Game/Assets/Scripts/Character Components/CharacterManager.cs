@@ -7,6 +7,9 @@ using SwapGame.StaticMethods;
 
 namespace SwapGame.CharacterComponents
 {
+    /// <summary>
+    /// Handles assigning character data to necessary components when a character is spawned
+    /// </summary>
     public class CharacterManager : MonoBehaviour
     {
         [SerializeField] private Character _currentCharacter;
@@ -18,6 +21,8 @@ namespace SwapGame.CharacterComponents
 
         [SerializeField] private InputBase _playerInput;
         [SerializeField] private InputBase _aiInput;
+
+        [SerializeField] private Attack _attackScript;
 
         private InputBase _currentInput;
 
@@ -34,6 +39,10 @@ namespace SwapGame.CharacterComponents
             print($"Picked group {index}");
 
             _currentCharacter = SelectRandomCharacter(groupToSpawnFrom);
+
+            gameObject.name = _currentCharacter.name;
+
+
 
             #region Old Random Char Selector
             //int spawnValue = Random.Range(2, 101);
@@ -52,10 +61,17 @@ namespace SwapGame.CharacterComponents
 
         private Character SelectRandomCharacter(CharacterGroup charGroup)
         {
-            //For each enemy:
-            //Roll a boolean
-            //If True: move up 1 rarity
-            //Give final rarity int
+            /*---Random Character selection---
+             * For each character in the selected group:
+             * Roll a boolean
+             * If false:
+             * Break loop, use current index
+             * Else:
+             * Increment index
+             * Roll again
+             * 
+             * Characters should be ordered ascending in rarity in their group
+             */
 
             int characterIndex = 0;
 
@@ -88,9 +104,16 @@ namespace SwapGame.CharacterComponents
             //For attacks, things like fire rate and projectiles can be passed into the Attack script beforehand
             //The input scripts can then call a method to attempt an attack when necessary, all other logic is handled in the Attack script separately
             //May need to pass in an "aim direction" Vector2
+
             _health = _currentCharacter._health;
             _spriteRenderer.sprite = _currentCharacter._sprite;
             _movement._speed = _currentCharacter._speed;
+            _attackScript._attackDelay = _currentCharacter._fireRate;
+            _attackScript._projectilePrefab = _currentCharacter._projectile;
+
+            BoxCollider2D collider = GetComponent<BoxCollider2D>();
+            collider.size = _currentCharacter._size;
+
             SetAIControl();
         }
 
