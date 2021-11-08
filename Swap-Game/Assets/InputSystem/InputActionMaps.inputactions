@@ -236,6 +236,17 @@
                 },
                 {
                     "name": "",
+                    "id": "659d7090-460c-4500-b701-a8a0b3bc04e7",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard/Mouse",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "9d4196c5-c189-4a21-af5b-ad48f380ed47",
                     "path": "<Gamepad>/leftShoulder",
                     "interactions": "",

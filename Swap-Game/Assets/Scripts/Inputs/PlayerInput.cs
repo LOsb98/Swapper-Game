@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using SwapGame.GameManagement;
+using SwapGame.CharacterComponents;
 
 namespace SwapGame.Inputs
 {
@@ -12,45 +13,48 @@ namespace SwapGame.Inputs
         [SerializeField] private float _swapRange;
         [SerializeField] private LayerMask _swapLayer;
 
-        private Vector2 _moveVector;
-        private Vector3 _aimDir;
+        private Vector3 _aimDirection;
+        private bool _attacking;
 
         public InputActionMaps _controls;
 
 
         private void Awake()
         {
+            _attack.enabled = true;
+
             //Began implementing the newer Unity input package
             //The input package is horrid and evil but it makes setting up multiple input devices easier in the long-term
             _controls = new InputActionMaps();
             _controls.Player.SetCallbacks(this);
 
             #region Left stick/WASD
-            _controls.Player.Move.performed += ctx => _moveVector = ctx.ReadValue<Vector2>();
-            _controls.Player.Move.canceled += ctx => _moveVector = Vector2.zero;
+            _controls.Player.Move.performed += ctx => _moveDirection = ctx.ReadValue<Vector2>();
+            _controls.Player.Move.canceled += ctx => _moveDirection = Vector2.zero;
             #endregion
 
             #region Right stick/Mouse
             //Setting a default aim direction on Awake()
-            _aimDir = new Vector3(0, 1, 0);
-            _controls.Player.Aim.performed += ctx => _aimDir = ctx.ReadValue<Vector2>();
+            _aimDirection = new Vector3(0, 1, 0);
+            _controls.Player.Aim.performed += ctx => _aimDirection = ctx.ReadValue<Vector2>();
             _controls.Player.MouseAim.performed += ctx =>
             {
-                _aimDir = Camera.main.ScreenToWorldPoint(ctx.ReadValue<Vector2>());
-                _aimDir.z = 0;
-                _aimDir = (_aimDir - transform.position).normalized;
+                _aimDirection = Camera.main.ScreenToWorldPoint(ctx.ReadValue<Vector2>());
+                _aimDirection.z = 0;
+                _aimDirection = (_aimDirection - transform.position).normalized;
             };
             #endregion
 
             #region Attacking
-            _controls.Player.Fire.performed += ctx => print("Fired");
+            _controls.Player.Fire.performed += ctx => _attacking = true;
+            _controls.Player.Fire.canceled += ctx => _attacking = false;
             #endregion
 
             #region Swapping
             _controls.Player.Swap.performed += ctx =>
             {
             //This checks all the objects along the raycast, then checks which one is closer
-            RaycastHit2D[] swapCheck = Physics2D.RaycastAll(transform.position, _aimDir, _swapRange, _swapLayer);
+            RaycastHit2D[] swapCheck = Physics2D.RaycastAll(transform.position, _aimDirection, _swapRange, _swapLayer);
 
                 GameObject closestObj = null;
 
@@ -62,7 +66,7 @@ namespace SwapGame.Inputs
 
                     if (foundObject != gameObject)
                     {
-                        if (closestObj == null || obj.distance < Vector2.Distance(closestObj.transform.position, pos))
+                        if (!closestObj|| obj.distance < Vector2.Distance(closestObj.transform.position, pos))
                         {
                         //closestObj stores whichever object is closest as of the current iteration
                         closestObj = foundObject;
@@ -83,7 +87,12 @@ namespace SwapGame.Inputs
 
         public override void Step()
         {
-            movement.Move(_moveVector);
+            movement.Move(_moveDirection);
+
+            if (_attacking)
+            {
+                _attack.TryNewAttack(_aimDirection);
+            }
         }
 
         public override void Die()
@@ -94,7 +103,7 @@ namespace SwapGame.Inputs
         void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawRay(transform.position, _aimDir * _swapRange);
+            Gizmos.DrawRay(transform.position, _aimDirection * _swapRange);
         }
 
         #region Will get errors if these methods are taken out, just leave them in so the input package cooperates

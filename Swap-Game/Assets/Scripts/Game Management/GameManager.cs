@@ -8,17 +8,13 @@ namespace SwapGame.GameManagement
     public class GameManager : MonoBehaviour
     {
         [SerializeField] private GameObject _playerIcon;
-
         [SerializeField] private float _score;
 
         [SerializeField] private GameObject _currentPlayer;
-
-        private static GameManager _instance;
-
-        public static GameManager Instance { get { return _instance; } }
-
         public GameObject CurrentPlayer => _currentPlayer;
 
+        private static GameManager _instance;
+        public static GameManager Instance { get { return _instance; } }
 
         //An error comes up if this is assigned to the first instance of the Character object
         //i.e. If this =  Character, the error comes up
@@ -65,9 +61,9 @@ namespace SwapGame.GameManagement
             _currentPlayer = newPlayer;
         }
 
-        public void AddScore(int score)
+        public void AddScore()
         {
-
+            _score++;
         }
 
         public void EndGame()

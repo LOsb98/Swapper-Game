@@ -12,6 +12,7 @@ namespace SwapGame.Inputs
     {
         [SerializeField] protected Movement movement;
 
+        [SerializeField] protected Vector2 _moveDirection;
         protected GameManager _gameManager;
         protected CharacterManager _charManager;
         protected Attack _attack;
@@ -25,6 +26,5 @@ namespace SwapGame.Inputs
         /// When the player dies the game ends, when an AI dies the score is increased
         /// </summary>
         public abstract void Die();
-
     }
 }

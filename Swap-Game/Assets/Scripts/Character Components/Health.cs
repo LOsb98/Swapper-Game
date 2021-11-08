@@ -4,18 +4,16 @@ using UnityEngine;
 
 namespace SwapGame.CharacterComponents
 {
+    /// <summary>
+    /// Handles health for a character
+    /// </summary>
     public class Health : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
+        [SerializeField] private int _health;
+
+        public void TakeDamage(int damage)
         {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
+            Debug.Log($"Hit {gameObject} for {damage} damage");
         }
     }
 }
