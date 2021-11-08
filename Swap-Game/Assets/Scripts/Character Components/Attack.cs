@@ -46,6 +46,7 @@ namespace SwapGame.CharacterComponents
 
             Projectile projectileScript = newProjectile.GetComponent<Projectile>();
             projectileScript.AssignMoveDirection(aimDirection);
+            projectileScript._projectileOwner = gameObject;
 
             _attackTimer = _attackDelay;
         }

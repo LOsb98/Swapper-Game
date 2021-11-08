@@ -15,6 +15,7 @@ namespace SwapGame.EntityComponents
     {
         private Vector3 _moveVector;
 
+        public GameObject _projectileOwner;
         public float _hitboxSize;
         public float _speed;
         public int _damage;
@@ -49,7 +50,9 @@ namespace SwapGame.EntityComponents
         {
             Collider2D hitboxCheck = Physics2D.OverlapCircle(transform.position, _hitboxSize);
 
-            if (hitboxCheck)
+            //We want to ignore the character who fired the projectile
+            //Enemies can be allowed to friendly fire because it's funny
+            if (hitboxCheck && hitboxCheck.gameObject != _projectileOwner)
             {
                 //Deal damage if we hit a character
                 if (hitboxCheck.TryGetComponent<Health>(out Health health))
