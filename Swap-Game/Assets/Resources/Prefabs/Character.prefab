@@ -13,10 +13,12 @@ GameObject:
   - component: {fileID: 1728882891873335664}
   - component: {fileID: 1728882891873335663}
   - component: {fileID: 1728882891873335667}
+  - component: {fileID: 2454339035294566327}
   - component: {fileID: 1728882891873335669}
   - component: {fileID: 1728882891873335668}
   - component: {fileID: 8077159212470436933}
   - component: {fileID: 4130508342850963294}
+  - component: {fileID: -390105219194146941}
   m_Layer: 3
   m_Name: Character
   m_TagString: Untagged
@@ -131,6 +133,7 @@ MonoBehaviour:
   _movement: {fileID: 1728882891873335667}
   _playerInput: {fileID: 1728882891873335669}
   _aiInput: {fileID: 1728882891873335668}
+  _attackScript: {fileID: -390105219194146941}
 --- !u!114 &1728882891873335667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,6 +148,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 1728882891873335664}
   _speed: 0
+--- !u!114 &2454339035294566327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1728882891873335662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a66b32b21f038b9409c24cd11a7840ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: 0
 --- !u!114 &1728882891873335669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,6 +178,7 @@ MonoBehaviour:
   _swapLayer:
     serializedVersion: 2
     m_Bits: 8
+  _attackScript: {fileID: -390105219194146941}
 --- !u!114 &1728882891873335668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,3 +232,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-390105219194146941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1728882891873335662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f754441fb516d24fbc96051467ad52b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _projectileSpawnDistance: 1
+  _attackDelay: 0
+  _projectilePrefab: {fileID: 0}
