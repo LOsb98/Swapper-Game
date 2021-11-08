@@ -16,6 +16,7 @@ namespace SwapGame.Inputs
 
         private Vector2 _moveVector;
         private Vector3 _aimDirection;
+        private bool _attacking;
 
         public InputActionMaps _controls;
 
@@ -47,7 +48,8 @@ namespace SwapGame.Inputs
             #endregion
 
             #region Attacking
-            _controls.Player.Fire.performed += ctx => AttemptAttack();
+            _controls.Player.Fire.performed += ctx => _attacking = true;
+            _controls.Player.Fire.canceled += ctx => _attacking = false;
             #endregion
 
             #region Swapping
@@ -88,6 +90,10 @@ namespace SwapGame.Inputs
         public override void Step()
         {
             movement.Move(_moveVector);
+            if (_attacking)
+            {
+                AttemptAttack();
+            }
         }
 
         public override void AttemptAttack()
