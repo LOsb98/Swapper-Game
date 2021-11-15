@@ -21,7 +21,7 @@ namespace SwapGame.Inputs
 
         private void Awake()
         {
-            _attack.enabled = true;
+            _attackScript.enabled = true;
 
             //Began implementing the newer Unity input package
             //The input package is horrid and evil but it makes setting up multiple input devices easier in the long-term
@@ -77,8 +77,7 @@ namespace SwapGame.Inputs
             //Otherwise, if the raycast doesn't hit anything, it returns an error as it tries to print the name of a non-existant object
             if (closestObj != null)
                 {
-                    var manager = GameManager.Instance;
-                    manager.SetNewPlayer(closestObj);
+                     GameManager.Instance.SetNewPlayer(closestObj);
                     print("Swapped to " + closestObj.name);
                 }
             };
@@ -91,7 +90,7 @@ namespace SwapGame.Inputs
 
             if (_attacking)
             {
-                _attack.TryNewAttack(_aimDirection);
+                _attackScript.TryNewAttack(_aimDirection);
             }
         }
 
@@ -106,10 +105,8 @@ namespace SwapGame.Inputs
             Gizmos.DrawRay(transform.position, _aimDirection * _swapRange);
         }
 
-        #region Will get errors if these methods are taken out, just leave them in so the input package cooperates
-        //Input package now requires these methods to be present in a script using it?
-        //Can still do input package things in Awake()
-        //Seems like these methods will continue firing as long as the control is being performed?
+        #region Input automatic callback methods
+        //These methods will continue firing as long as the control is being performed?
         public void OnMove(InputAction.CallbackContext context)
         {
 

@@ -11,12 +11,16 @@ namespace SwapGame.Inputs
     public abstract class InputBase : MonoBehaviour
     {
         [SerializeField] protected Movement movement;
-
+        [SerializeField] protected Attack _attackScript;
         [SerializeField] protected Vector2 _moveDirection;
-        protected GameManager _gameManager;
-        protected CharacterManager _charManager;
-        protected Attack _attack;
 
+        private void OnValidate()
+        {
+            if (TryGetComponent<Attack>(out Attack attackScript))
+            {
+                _attackScript = attackScript;
+            }
+        }
         /// <summary>
         /// Step() is essentially the update function for the input classes
         /// </summary>
