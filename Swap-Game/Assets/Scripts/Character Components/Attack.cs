@@ -38,8 +38,9 @@ namespace SwapGame.CharacterComponents
             GameObject newProjectile = Instantiate(_projectilePrefab, projectileSpawnPos, Quaternion.Euler(0f, 0f, 0f));
 
             Projectile projectileScript = newProjectile.GetComponent<Projectile>();
-            projectileScript.AssignMoveDirection(aimDirection);
             projectileScript._projectileOwner = gameObject;
+
+            projectileScript.AssignMoveDirection(aimDirection);
 
             _attackTimer = _attackDelay;
         }
