@@ -13,20 +13,31 @@ namespace SwapGame.EntityComponents
     /// </summary>
     public class Projectile : MonoBehaviour
     {
+        [SerializeField] private float _hitboxSize;
+        [SerializeField] private float _speed;
+        [SerializeField] private int _damage;
+        [SerializeField] private float _lifeSpan;
+        [SerializeField] private List<GameObject> _hitCharacterList;
+        [SerializeField] private bool _isMeleeAttack;
+
         private Vector3 _moveVector;
 
         public GameObject _projectileOwner;
-        public float _hitboxSize;
-        public float _speed;
-        public int _damage;
-        public float _lifeSpan;
 
         public void AssignMoveDirection(Vector3 direction)
         {
-            //Control stick value SHOULD be normalised already
             _moveVector = direction;
+            //if (_isMeleeAttack)
+            //{
+            //    _moveVector -= currentDirection.normalized;
+            //}
 
             _moveVector *= _speed;
+
+            //If the attack is melee we want it to move at a speed consistent with the player
+            //It looks strange when the player moves as fast as the melee attack
+            //Also gives it more range
+
         }
 
         private void Update()
@@ -50,18 +61,32 @@ namespace SwapGame.EntityComponents
         {
             Collider2D hitboxCheck = Physics2D.OverlapCircle(transform.position, _hitboxSize);
 
-            //We want to ignore the character who fired the projectile
-            //Enemies can be allowed to friendly fire because it's funny
-            if (hitboxCheck && hitboxCheck.gameObject != _projectileOwner)
+            //Hit nothing
+            if (!hitboxCheck)
             {
-                //Deal damage if we hit a character
-                if (hitboxCheck.TryGetComponent<Health>(out Health health))
-                {
-                    health.TakeDamage(_damage);
-                }
+                return;
+            }
 
-                //Regardless of what we hit, destroy the projectile
-                Destroy(gameObject);
+            GameObject hitObject = hitboxCheck.gameObject;
+
+            //Stop projectiles hitting the character who fired them
+            if (hitObject == _projectileOwner)
+            {
+                return;
+            }
+
+            //Projectiles are piercing so need to stop them hitting the same character multiple times
+            if (_hitCharacterList.Contains(hitObject))
+            {
+                return;
+            }
+
+            //Deal damage if we hit a character
+            //Add them to the list of characters the projectile has hit
+            if (hitObject.TryGetComponent<Health>(out Health health))
+            {
+                health.TakeDamage(_damage);
+                _hitCharacterList.Add(hitObject);
             }
         }
 
