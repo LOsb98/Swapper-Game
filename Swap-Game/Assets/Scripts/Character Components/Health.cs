@@ -11,9 +11,28 @@ namespace SwapGame.CharacterComponents
     {
         [SerializeField] private int _health;
 
+        public int CurrentHealth
+        {
+            get
+            {
+                return _health;
+            }
+            set
+            {
+                Debug.Log($"Dealt {gameObject} {_health - value} damage");
+
+                _health = value;
+
+                if (_health <= 0)
+                {
+                    Destroy(gameObject);
+                }
+            }
+        }
+
         public void TakeDamage(int damage)
         {
-            Debug.Log($"Hit {gameObject} for {damage} damage");
+            CurrentHealth -= damage;
         }
     }
 }

@@ -15,7 +15,6 @@ namespace SwapGame.CharacterComponents
         [SerializeField] private Character _currentCharacter;
         [SerializeField] private CharacterGroup[] _characterGroups;
 
-        [SerializeField] private int _health;
         [SerializeField] private SpriteRenderer _spriteRenderer;
         [SerializeField] private Movement _movement;
 
@@ -23,6 +22,7 @@ namespace SwapGame.CharacterComponents
         [SerializeField] private InputBase _aiInput;
 
         [SerializeField] private Attack _attackScript;
+        [SerializeField] private Health _healthManager;
 
         private InputBase _currentInput;
 
@@ -41,22 +41,6 @@ namespace SwapGame.CharacterComponents
             _currentCharacter = SelectRandomCharacter(groupToSpawnFrom);
 
             gameObject.name = _currentCharacter.name;
-
-
-
-            #region Old Random Char Selector
-            //int spawnValue = Random.Range(2, 101);
-
-            //Character selectedCharacter = null;
-
-            //foreach (Character character in groupToSpawnFrom._list)
-            //{
-            //    if (spawnValue > character._spawnRate)
-            //    {
-            //        selectedCharacter = character;
-            //    }
-            //}
-            #endregion
         }
 
         private Character SelectRandomCharacter(CharacterGroup charGroup)
@@ -105,7 +89,7 @@ namespace SwapGame.CharacterComponents
             //The input scripts can then call a method to attempt an attack when necessary, all other logic is handled in the Attack script separately
             //May need to pass in an "aim direction" Vector2
 
-            _health = _currentCharacter._health;
+            _healthManager.CurrentHealth = _currentCharacter._health;
             _spriteRenderer.sprite = _currentCharacter._sprite;
             _movement._speed = _currentCharacter._speed;
             _attackScript._attackDelay = _currentCharacter._fireRate;
@@ -133,16 +117,6 @@ namespace SwapGame.CharacterComponents
         {
             _playerInput.enabled = false;
             _currentInput = _aiInput;
-        }
-
-        public void ChangeHealth(int value)
-        {
-            _health += value;
-
-            if (_health <= 0)
-            {
-                _currentInput.Die();
-            }
         }
     }
 }
