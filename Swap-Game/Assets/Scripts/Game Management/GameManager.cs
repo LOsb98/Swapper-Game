@@ -8,7 +8,9 @@ namespace SwapGame.GameManagement
     public class GameManager : MonoBehaviour
     {
         [SerializeField] private GameObject _playerIcon;
-        [SerializeField] private float _score;
+        [SerializeField] private int _score;
+
+        [SerializeField] private EnemySpawner _enemySpawner;
 
         [SerializeField] private GameObject _currentPlayer;
         public GameObject CurrentPlayer => _currentPlayer;
@@ -68,6 +70,7 @@ namespace SwapGame.GameManagement
 
         public void EndGame()
         {
+            _enemySpawner.enabled = false;
             //Logic for ending the game
         }
     }
