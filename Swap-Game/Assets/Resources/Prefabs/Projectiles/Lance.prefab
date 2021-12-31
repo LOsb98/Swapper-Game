@@ -99,7 +99,7 @@ MonoBehaviour:
   _hitboxSize: 0.2
   _speed: 6
   _damage: 4
-  _lifeSpan: 0.1
+  _lifeSpan: 0.5
   _hitCharacterList: []
   _isMeleeAttack: 1
   _projectileOwner: {fileID: 0}
