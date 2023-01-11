@@ -68,6 +68,11 @@ namespace SwapGame.GameManagement
             _score++;
         }
 
+        public void StartNewGame()
+        {
+            _enemySpawner.enabled = true;
+        }
+
         public void EndGame()
         {
             _enemySpawner.enabled = false;
