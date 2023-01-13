@@ -15,8 +15,8 @@ namespace SwapGame.CharacterComponents
             //Normalizing the Vector2 removes the ability to move faster while holding two movement keys at once
             _rigidbody.velocity = moveVector.normalized * _speed;
 
-            if (moveVector.x < 0) transform.localScale = new Vector3(-1, 1, 1);
-            else if (moveVector.x > 0) transform.localScale = new Vector3(1, 1, 1);
+            //if (moveVector.x < 0) transform.localScale = new Vector3(-1, 1, 1);
+            //else if (moveVector.x > 0) transform.localScale = new Vector3(1, 1, 1);
         }
     }
 }

@@ -524,6 +524,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerIcon: {fileID: 1645367185}
   _score: 0
+  _enemySpawner: {fileID: 1015595802}
   _currentPlayer: {fileID: 123070138}
 --- !u!4 &1015595800
 Transform:
@@ -565,6 +566,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterBase: {fileID: 1728882891873335662, guid: e676b0c7c0a13b646b822acc5b80202f, type: 3}
   _enemySpawnTime: 6
+  _maxPossibleEnemies: 10
+  _pooledEnemies: []
+  _characterPrefab: {fileID: 123070138}
 --- !u!1 &1019777309
 GameObject:
   m_ObjectHideFlags: 0

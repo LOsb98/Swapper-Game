@@ -110,12 +110,14 @@ namespace SwapGame.CharacterComponents
         public void SetPlayerControl()
         {
             _playerInput.enabled = true;
+            _aiInput.enabled = false;
             _currentInput = _playerInput;
         }
 
         public void SetAIControl()
         {
             _playerInput.enabled = false;
+            _aiInput.enabled = true;
             _currentInput = _aiInput;
         }
     }
