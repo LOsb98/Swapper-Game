@@ -10,6 +10,7 @@ namespace SwapGame.CharacterComponents
     public class Health : MonoBehaviour
     {
         [SerializeField] private int _health;
+        [SerializeField] private CharacterManager _characterManager;
 
         public int CurrentHealth
         {
@@ -25,7 +26,10 @@ namespace SwapGame.CharacterComponents
 
                 if (_health <= 0)
                 {
-                    Destroy(gameObject);
+                    //Check whether the character dying is the player or AI controlled and do its death logic
+                    _characterManager.CurrentInput.Die();
+                    //Destroy(gameObject);
+                    gameObject.SetActive(false);
                 }
             }
         }

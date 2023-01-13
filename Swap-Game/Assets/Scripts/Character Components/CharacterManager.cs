@@ -26,13 +26,21 @@ namespace SwapGame.CharacterComponents
 
         private InputBase _currentInput;
 
-        private void Awake()
+        public InputBase CurrentInput => _currentInput;
+
+        private void OnEnable()
         {
+            Initialize();
+        }
+
+        public void Initialize()
+        {
+            Debug.Log("Initialize");
             if (_currentCharacter != null)
             {
-                return;
+               return;
             }
-
+            Debug.Log("Actually initializing");
             int groupCount = _characterGroups.Length;
             int index = Random.Range(0, groupCount);
             CharacterGroup groupToSpawnFrom = _characterGroups[index];
@@ -119,6 +127,11 @@ namespace SwapGame.CharacterComponents
             _playerInput.enabled = false;
             _aiInput.enabled = true;
             _currentInput = _aiInput;
+        }
+
+        private void OnDisable()
+        {
+            _currentCharacter = null;
         }
     }
 }

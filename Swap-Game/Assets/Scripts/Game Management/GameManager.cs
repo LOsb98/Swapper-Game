@@ -76,6 +76,7 @@ namespace SwapGame.GameManagement
         public void EndGame()
         {
             _enemySpawner.enabled = false;
+            EnemySpawner.Instance.ClearAllEnemies();
             //Logic for ending the game
         }
     }
