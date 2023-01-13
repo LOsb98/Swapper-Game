@@ -38,6 +38,11 @@ namespace SwapGame.EntityComponents
             //It looks strange when the player moves as fast as the melee attack
             //Also gives it more range
 
+            //Rotating the projectile to its move direction
+            //Uses right as the forward direction, so apply sprites accordingly
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
         }
 
         private void Update()
@@ -53,7 +58,7 @@ namespace SwapGame.EntityComponents
                 Destroy(gameObject);
             }
 
-            transform.Translate(_moveVector * Time.deltaTime);
+            transform.Translate(_moveVector * Time.deltaTime, Space.World);
             CheckHitbox();
         }
 
