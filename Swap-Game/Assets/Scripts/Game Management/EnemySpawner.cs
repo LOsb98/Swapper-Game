@@ -105,5 +105,10 @@ namespace SwapGame.GameManagement
                 enemy.SetActive(false);
             }
         }
+
+        public void ManualSpawnEnemy()
+        {
+            SpawnEnemy(NewSpawnPosition());
+        }
     }
 }

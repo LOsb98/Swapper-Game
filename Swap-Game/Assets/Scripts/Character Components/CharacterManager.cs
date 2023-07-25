@@ -49,6 +49,22 @@ namespace SwapGame.CharacterComponents
             _currentCharacter = SelectRandomCharacter(groupToSpawnFrom);
 
             gameObject.name = _currentCharacter.name;
+
+            //Sending character data to the relevant components here to avoid passing it to a bunch of component references/method parameters later
+            //For attacks, things like fire rate and projectiles can be passed into the Attack script beforehand
+            //The input scripts can then call a method to attempt an attack when necessary, all other logic is handled in the Attack script separately
+            //May need to pass in an "aim direction" Vector2
+
+            _healthManager.CurrentHealth = _currentCharacter._health;
+            _spriteRenderer.sprite = _currentCharacter._sprite;
+            _movement._speed = _currentCharacter._speed;
+            _attackScript._attackDelay = _currentCharacter._fireRate;
+            _attackScript._projectilePrefab = _currentCharacter._projectile;
+
+            BoxCollider2D collider = GetComponent<BoxCollider2D>();
+            collider.size = _currentCharacter._size;
+
+            SetAIControl();
         }
 
         private Character SelectRandomCharacter(CharacterGroup charGroup)
@@ -92,21 +108,7 @@ namespace SwapGame.CharacterComponents
 
         private void Start()
         {
-            //Sending character data to the relevant components here to avoid passing it to a bunch of component references/method parameters later
-            //For attacks, things like fire rate and projectiles can be passed into the Attack script beforehand
-            //The input scripts can then call a method to attempt an attack when necessary, all other logic is handled in the Attack script separately
-            //May need to pass in an "aim direction" Vector2
 
-            _healthManager.CurrentHealth = _currentCharacter._health;
-            _spriteRenderer.sprite = _currentCharacter._sprite;
-            _movement._speed = _currentCharacter._speed;
-            _attackScript._attackDelay = _currentCharacter._fireRate;
-            _attackScript._projectilePrefab = _currentCharacter._projectile;
-
-            BoxCollider2D collider = GetComponent<BoxCollider2D>();
-            collider.size = _currentCharacter._size;
-
-            SetAIControl();
         }
 
         private void Update()
