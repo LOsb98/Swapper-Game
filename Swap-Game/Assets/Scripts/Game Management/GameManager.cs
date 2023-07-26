@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SwapGame.CharacterComponents;
+using UnityEngine.Events;
 
 namespace SwapGame.GameManagement
 {
@@ -12,11 +13,18 @@ namespace SwapGame.GameManagement
 
         [SerializeField] private EnemySpawner _enemySpawner;
 
-        [SerializeField] private GameObject _currentPlayer;
-        public GameObject CurrentPlayer => _currentPlayer;
+        /// <summary>
+        /// A reference to the game object which the player is currently controlling
+        /// </summary>
+        public CharacterManager _currentPlayer;
 
         private static GameManager _instance;
         public static GameManager Instance { get { return _instance; } }
+
+        public UnityEvent OnGameStart;
+        public UnityEvent OnPlayerSwapped;
+        public UnityEvent OnPlayerDied;
+        public UnityEvent OnEnemyDied;
 
         //An error comes up if this is assigned to the first instance of the Character object
         //i.e. If this =  Character, the error comes up
@@ -35,32 +43,30 @@ namespace SwapGame.GameManagement
             }
         }
 
-        void Start()
+        public void StartNewGame()
         {
             //This needs to be done in Start() and not Awake()
-            //The execution order will try and call SetPlayer() on the CharacterManager before it has finished getting all its compoment references
+            //The execution order will try and call SetPlayer() on the CharacterManager before it has finished getting all its component references
             //It will throw an error + the PlayerIcon will not track the player (only in the build version?)
-            SetNewPlayer(CurrentPlayer);
+
+            //SetNewPlayer(_currentPlayer);
+            OnGameStart.Invoke();
         }
 
-        void Update()
+        public void SetNewPlayer(CharacterManager newPlayer)
         {
-            //Increment timers for spawning enemies
-            _playerIcon.transform.position = CurrentPlayer.transform.position;
-        }
-
-        public void SetNewPlayer(GameObject newPlayer)
-        {
-            if (CurrentPlayer != null)
+            if (_currentPlayer)
             {
-                var currentCharManager = CurrentPlayer.GetComponent<CharacterManager>();
+                var currentCharManager = _currentPlayer;
                 currentCharManager.SetAIControl();
             }
 
-            var newCharManager = newPlayer.GetComponent<CharacterManager>();
+            var newCharManager = newPlayer;
             newCharManager.SetPlayerControl();
 
             _currentPlayer = newPlayer;
+
+            OnPlayerSwapped.Invoke();
         }
 
         public void AddScore()
@@ -68,16 +74,15 @@ namespace SwapGame.GameManagement
             _score++;
         }
 
-        public void StartNewGame()
-        {
-            _enemySpawner.enabled = true;
-        }
-
         public void EndGame()
         {
-            _enemySpawner.enabled = false;
-            EnemySpawner.Instance.ClearAllEnemies();
             //Logic for ending the game
+        }
+
+        public void MovePlayerIndicator()
+        {
+            _playerIcon.transform.parent = _currentPlayer.transform;
+            _playerIcon.transform.localPosition = Vector2.zero;
         }
     }
 }

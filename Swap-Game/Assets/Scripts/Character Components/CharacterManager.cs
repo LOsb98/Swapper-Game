@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 using SwapGame.ScriptableObjects;
 using SwapGame.Inputs;
-using SwapGame.StaticMethods;
 
 namespace SwapGame.CharacterComponents
 {
@@ -12,8 +10,7 @@ namespace SwapGame.CharacterComponents
     /// </summary>
     public class CharacterManager : MonoBehaviour
     {
-        [SerializeField] private Character _currentCharacter;
-        [SerializeField] private CharacterGroup[] _characterGroups;
+        public Character _currentCharacter;
 
         [SerializeField] private SpriteRenderer _spriteRenderer;
         [SerializeField] private Movement _movement;
@@ -24,33 +21,19 @@ namespace SwapGame.CharacterComponents
         [SerializeField] private Attack _attackScript;
         [SerializeField] private Health _healthManager;
 
+        [SerializeField] private BoxCollider2D collider;
+
         private InputBase _currentInput;
 
         public InputBase CurrentInput => _currentInput;
 
-        private void OnEnable()
-        {
-            Initialize();
-        }
-
         public void Initialize()
         {
             Debug.Log("Initialize");
-            if (_currentCharacter != null)
-            {
-               return;
-            }
-            Debug.Log("Actually initializing");
-            int groupCount = _characterGroups.Length;
-            int index = Random.Range(0, groupCount);
-            CharacterGroup groupToSpawnFrom = _characterGroups[index];
-            print($"Picked group {index}");
 
-            _currentCharacter = SelectRandomCharacter(groupToSpawnFrom);
+            gameObject.name = _currentCharacter.name; //This should already be set by the time we get here
 
-            gameObject.name = _currentCharacter.name;
-
-            //Sending character data to the relevant components here to avoid passing it to a bunch of component references/method parameters later
+            //Sending character data to the relevant components
             //For attacks, things like fire rate and projectiles can be passed into the Attack script beforehand
             //The input scripts can then call a method to attempt an attack when necessary, all other logic is handled in the Attack script separately
             //May need to pass in an "aim direction" Vector2
@@ -61,59 +44,25 @@ namespace SwapGame.CharacterComponents
             _attackScript._attackDelay = _currentCharacter._fireRate;
             _attackScript._projectilePrefab = _currentCharacter._projectile;
 
-            BoxCollider2D collider = GetComponent<BoxCollider2D>();
             collider.size = _currentCharacter._size;
 
-            SetAIControl();
+            StartStepCoroutine();
         }
 
-        private Character SelectRandomCharacter(CharacterGroup charGroup)
+        public void StartStepCoroutine()
         {
-            /*---Random Character selection---
-             * For each character in the selected group:
-             * Roll a boolean
-             * If false:
-             * Break loop, use current index
-             * Else:
-             * Increment index
-             * Roll again
-             * 
-             * Characters should be ordered ascending in rarity in their group
-             */
+            StartCoroutine(DoStep());
+        }
 
-            int characterIndex = 0;
-
-            int rollCount = charGroup._list.Length - 1;
-
-            for (int i = 0; i < rollCount; i++)
+        private IEnumerator DoStep()
+        {
+            do
             {
-                if (MathsStuff.CoinToss())
-                {
-                    characterIndex++;
-                }
-                else
-                {
-                    break;
-                }
-            }
+                _currentInput.Step();
 
-            Debug.Log($"Spawn value: {characterIndex}");
+                yield return null;
 
-            Character finalCharacterSpawn = charGroup._list[characterIndex];
-
-            Debug.Log($"Spawn character: {finalCharacterSpawn.name}");
-
-            return finalCharacterSpawn;
-        }
-
-        private void Start()
-        {
-
-        }
-
-        private void Update()
-        {
-            _currentInput.Step();
+            } while (true);
         }
 
         //Keeping this as a separate method that can be called from other scripts later

@@ -15,7 +15,6 @@ namespace SwapGame.Inputs
 
         private void Start()
         {
-            //InvokeRepeating("TryAttack", 2f, 1f);
             StartCoroutine(AttackRoutine());
             StartCoroutine(MoveRoutine());
         }
@@ -44,13 +43,12 @@ namespace SwapGame.Inputs
 
         public override void Die()
         {
-            GameManager.Instance.AddScore();
-            //Increase the player's score
+            GameManager.Instance.OnEnemyDied.Invoke();
         }
 
         private Vector2 TargetPlayer()
         {
-            return (GameManager.Instance.CurrentPlayer.transform.position - transform.position).normalized;
+            return (GameManager.Instance._currentPlayer.transform.position - transform.position).normalized;
         }
 
         IEnumerator AttackRoutine()
@@ -81,9 +79,9 @@ namespace SwapGame.Inputs
 
                 movement.Move(_moveDirection);
 
-                GameObject player = GameManager.Instance.CurrentPlayer;
+                Transform player = GameManager.Instance._currentPlayer.transform;
 
-                transform.localScale = new Vector3(transform.position.x > player.transform.position.x ? -1f : 1f, 1f);
+                transform.localScale = new Vector3(transform.position.x > player.position.x ? -1f : 1f, 1f);
 
                 _moveDirection = new Vector2(Random.Range(1f, -1f), Random.Range(1f, -1f));
 
