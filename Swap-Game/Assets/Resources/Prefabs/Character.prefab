@@ -151,15 +151,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b11c4c48e9f28c46a2169093e7fef17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentCharacter: {fileID: 0}
-  _characterGroups:
-  - {fileID: 11400000, guid: 41bb0fba9c45f884dbb0fe71552f8a9c, type: 2}
+  _currentCharacter: {fileID: 11400000, guid: dde8560ea54840f46a21077ea41cd111, type: 2}
   _spriteRenderer: {fileID: 1728882891873335665}
   _movement: {fileID: 1728882891873335667}
   _playerInput: {fileID: 1728882891873335669}
   _aiInput: {fileID: 1728882891873335668}
   _attackScript: {fileID: -390105219194146941}
   _healthManager: {fileID: 2454339035294566327}
+  collider: {fileID: 4130508342850963294}
 --- !u!114 &1728882891873335667
 MonoBehaviour:
   m_ObjectHideFlags: 0
