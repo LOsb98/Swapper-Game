@@ -10,7 +10,7 @@ namespace SwapGame.Inputs
     //The CharacterManager will switch between each
     public abstract class InputBase : MonoBehaviour
     {
-        [SerializeField] protected Movement movement;
+        [SerializeField] protected Movement _movement;
         [SerializeField] protected Attack _attackScript;
         [SerializeField] protected Vector2 _moveDirection;
 

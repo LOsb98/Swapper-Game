@@ -44,11 +44,12 @@ namespace SwapGame.CharacterComponents
             _attackScript._attackDelay = _currentCharacter._fireRate;
             _attackScript._projectilePrefab = _currentCharacter._projectile;
 
-            collider.size = _currentCharacter._size;
+            boxCollider.size = _currentCharacter._size;
 
             StartStepCoroutine();
         }
 
+        //This should automatically turn off when the object is disabled
         public void StartStepCoroutine()
         {
             StartCoroutine(DoStep());

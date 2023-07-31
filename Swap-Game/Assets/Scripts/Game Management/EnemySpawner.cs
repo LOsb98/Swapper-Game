@@ -29,7 +29,7 @@ namespace SwapGame.GameManagement
 
         [SerializeField] private CharacterGroup[] _characterGroups;
 
-        private Vector2 screenBounds;
+        private Vector2 _screenBounds;
 
         private static EnemySpawner _instance;
         public static EnemySpawner Instance => _instance;
@@ -64,8 +64,8 @@ namespace SwapGame.GameManagement
         private Vector2 NewSpawnPosition()
         {
             Vector2 enemySpawnPos;
-            enemySpawnPos.x = Random.Range(-screenBounds.x + 2, screenBounds.x - 2);
-            enemySpawnPos.y = Random.Range(-screenBounds.y + 2, screenBounds.y - 2);
+            enemySpawnPos.x = Random.Range(-_screenBounds.x + 2, _screenBounds.x - 2);
+            enemySpawnPos.y = Random.Range(-_screenBounds.y + 2, _screenBounds.y - 2);
 
             return enemySpawnPos;
         }

@@ -5,7 +5,7 @@ using UnityEngine;
 public static class ExtensionMethods
 {
     /// <summary>
-    /// Convert a Vector3 to a Vector2 (For 2D: Z value will be zero)
+    /// Convert a Vector2 to a Vector3 (For 2D: Z value will be zero)
     /// </summary>
     public static Vector3 ConvertToVector3(this Vector2 vector2)
     {
