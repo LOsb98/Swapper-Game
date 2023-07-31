@@ -15,13 +15,13 @@ namespace SwapGame.CharacterComponents
         [SerializeField] private SpriteRenderer _spriteRenderer;
         [SerializeField] private Movement _movement;
 
-        [SerializeField] private InputBase _playerInput;
-        [SerializeField] private InputBase _aiInput;
+        [SerializeField] private PlayerInput _playerInput;
+        [SerializeField] private AIInput _aiInput;
 
         [SerializeField] private Attack _attackScript;
         [SerializeField] private Health _healthManager;
 
-        [SerializeField] private BoxCollider2D collider;
+        [SerializeField] private BoxCollider2D boxCollider;
 
         private InputBase _currentInput;
 
