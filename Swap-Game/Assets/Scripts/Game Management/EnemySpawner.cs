@@ -48,7 +48,7 @@ namespace SwapGame.GameManagement
 
         private void Start()
         {
-            screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
+            _screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
 
             GameObject temp;
             for (int i = 0; i < _maxPossibleEnemies; i++)
@@ -170,12 +170,14 @@ namespace SwapGame.GameManagement
 
         public void StartEnemySpawner()
         {
-            StartCoroutine(EnemySpawnerLoop());
+            _attackRoutine = EnemySpawnerLoop();
+            StartCoroutine(_attackRoutine);
         }
 
         public void StopEnemySpawner()
         {
-            StopCoroutine(EnemySpawnerLoop());
+            Debug.Log("Stop enemy spawner");
+            StopCoroutine(_attackRoutine);
         }
 
         /// <summary>
