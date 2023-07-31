@@ -18,7 +18,6 @@ namespace SwapGame.Inputs
 
         public InputActionMaps _controls;
 
-
         private void Awake()
         {
             _attackScript.enabled = true;
@@ -77,7 +76,7 @@ namespace SwapGame.Inputs
             //Otherwise, if the raycast doesn't hit anything, it returns an error as it tries to print the name of a non-existant object
             if (closestObj != null)
                 {
-                     GameManager.Instance.SetNewPlayer(closestObj);
+                     GameManager.Instance.SetNewPlayer(closestObj.GetComponent<CharacterManager>());
                     print("Swapped to " + closestObj.name);
                 }
             };
@@ -86,8 +85,6 @@ namespace SwapGame.Inputs
 
         public override void Step()
         {
-            movement.Move(_moveDirection);
-
             if (_attacking)
             {
                 _attackScript.TryNewAttack(_aimDirection);
@@ -96,7 +93,7 @@ namespace SwapGame.Inputs
 
         public override void Die()
         {
-            GameManager.Instance.EndGame();
+            GameManager.Instance.OnPlayerDied.Invoke();
         }
 
         void OnDrawGizmosSelected()

@@ -13,32 +13,27 @@ namespace SwapGame.Inputs
 
         private float _moveTimer;
 
-        private void Start()
-        {
-            StartCoroutine(AttackRoutine());
-            StartCoroutine(MoveRoutine());
-        }
-
-        private void OnDisable()
-        {
-            StopAllCoroutines();
-        }
-
         public override void Step()
         {
-            //movement.Move(_moveDirection);
-            //_moveTimer -= Time.deltaTime;
+            _movement.Move(_moveDirection);
 
-            //GameObject player = GameManager.Instance.CurrentPlayer;
+            GameObject player = GameManager.Instance._currentPlayer.gameObject;
+            transform.localScale = new Vector3(transform.position.x > player.transform.position.x ? -1f : 1f, 1f);
 
-            //transform.localScale = new Vector3(transform.position.x > player.transform.position.x ? -1f : 1f, 1f);
+            _moveTimer -= Time.deltaTime;
+            if (_moveTimer <= 0) //If move timer is 0, pick new movement direction
+            {
+                _moveTimer = _moveTime;
+                _moveDirection = new Vector2(Random.Range(1f, -1f), Random.Range(1f, -1f));
 
-            //if (_moveTimer <= 0)
-            //{
-            //    _moveTimer = _moveTime;
-            //    _moveDirection = new Vector2(Random.Range(1f, -1f), Random.Range(1f, -1f));
+            }
 
-            //}
+            int random = Random.Range(1, 5);
+            if (random >= 3)
+            {
+                //Attack attempt successful
+                _attackScript.TryNewAttack(TargetPlayer());
+            }
         }
 
         public override void Die()
@@ -49,44 +44,6 @@ namespace SwapGame.Inputs
         private Vector2 TargetPlayer()
         {
             return (GameManager.Instance._currentPlayer.transform.position - transform.position).normalized;
-        }
-
-        IEnumerator AttackRoutine()
-        {
-            while (true)
-            {
-                //Wait for 1 second between attacks
-                yield return new WaitForSeconds(1);
-
-                //Check random value to see if we attack this time
-                int random = Random.Range(1, 5);
-
-                if (true)
-                {
-                    //Attack successful
-                    _attackScript.TryNewAttack(TargetPlayer());
-                }
-
-                yield return null;
-            }
-        }
-
-        IEnumerator MoveRoutine()
-        {
-            while (true)
-            {
-                yield return new WaitForSeconds(_moveTime);
-
-                movement.Move(_moveDirection);
-
-                Transform player = GameManager.Instance._currentPlayer.transform;
-
-                transform.localScale = new Vector3(transform.position.x > player.position.x ? -1f : 1f, 1f);
-
-                _moveDirection = new Vector2(Random.Range(1f, -1f), Random.Range(1f, -1f));
-
-                yield return null;
-            }
         }
     }
 }

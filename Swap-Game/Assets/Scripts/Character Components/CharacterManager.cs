@@ -69,15 +69,13 @@ namespace SwapGame.CharacterComponents
         //Keeping this as a separate method that can be called from other scripts later
         public void SetPlayerControl()
         {
-            _playerInput.enabled = true;
-            _aiInput.enabled = false;
+            _playerInput.enabled = true; //Have to set this enabled/disabled for the controls package
             _currentInput = _playerInput;
         }
 
         public void SetAIControl()
         {
             _playerInput.enabled = false;
-            _aiInput.enabled = true;
             _currentInput = _aiInput;
         }
 
