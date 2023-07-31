@@ -29,8 +29,8 @@ namespace SwapGame.Inputs
             _controls.Player.SetCallbacks(this);
 
             #region Left stick/WASD
-            _controls.Player.Move.performed += ctx => _moveDirection = ctx.ReadValue<Vector2>();
-            _controls.Player.Move.canceled += ctx => _moveDirection = Vector2.zero;
+            _controls.Player.Move.performed += ctx => _movement.Move(ctx.ReadValue<Vector2>());
+            _controls.Player.Move.canceled += ctx => _movement.Move(Vector2.zero);
             #endregion
 
             #region Right stick/Mouse
