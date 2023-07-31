@@ -34,6 +34,8 @@ namespace SwapGame.GameManagement
         private static EnemySpawner _instance;
         public static EnemySpawner Instance => _instance;
 
+        private IEnumerator _attackRoutine;
+
         private void Awake()
         {
             if (_instance != null && _instance != this)
