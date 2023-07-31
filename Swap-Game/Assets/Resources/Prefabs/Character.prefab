@@ -158,7 +158,7 @@ MonoBehaviour:
   _aiInput: {fileID: 1728882891873335668}
   _attackScript: {fileID: -390105219194146941}
   _healthManager: {fileID: 2454339035294566327}
-  collider: {fileID: 4130508342850963294}
+  boxCollider: {fileID: 4130508342850963294}
 --- !u!114 &1728882891873335667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2a184c4cdf0a5b45a3eb71809b86d84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movement: {fileID: 1728882891873335667}
+  _movement: {fileID: 1728882891873335667}
   _attackScript: {fileID: -390105219194146941}
   _moveDirection: {x: 0, y: 0}
   _swapRange: 3
@@ -233,7 +233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 875a23bfcfc0b744baa0abb66f6b4417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movement: {fileID: 1728882891873335667}
+  _movement: {fileID: 1728882891873335667}
   _attackScript: {fileID: -390105219194146941}
   _moveDirection: {x: 0, y: 0}
   _moveTime: 1
