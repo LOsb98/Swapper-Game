@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SwapGame.CharacterComponents;
 using UnityEngine.Events;
+using TMPro;
 
 namespace SwapGame.GameManagement
 {
@@ -10,6 +11,7 @@ namespace SwapGame.GameManagement
     {
         [SerializeField] private GameObject _playerIcon;
         [SerializeField] private int _score;
+        [SerializeField] private TextMeshProUGUI _scoreText;
 
         [SerializeField] private EnemySpawner _enemySpawner;
 
@@ -72,6 +74,7 @@ namespace SwapGame.GameManagement
         public void AddScore()
         {
             _score++;
+            _scoreText.text = $"SCORE: {_score}";
         }
 
         public void EndGame()
