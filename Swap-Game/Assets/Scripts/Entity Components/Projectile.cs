@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SwapGame.CharacterComponents;
+using SwapGame.ScriptableObjects;
 
 namespace SwapGame.EntityComponents
 {
@@ -17,32 +18,37 @@ namespace SwapGame.EntityComponents
         [SerializeField] private float _speed;
         [SerializeField] private int _damage;
         [SerializeField] private float _lifeSpan;
-        [SerializeField] private List<GameObject> _hitCharacterList;
-        [SerializeField] private bool _isMeleeAttack;
+        [SerializeField] private SpriteRenderer _spriteRenderer;
+        [SerializeField] private List<GameObject> _hitCharacterList; //Stopping the same projectile from hitting a character multiple times, want projectiles to be piercing
 
-        private Vector3 _moveVector;
+        public Vector2 _moveVector;
 
         public GameObject _projectileOwner;
 
-        public void AssignMoveDirection(Vector3 direction)
+        public void InitializeProjectile(ProjectileData projectileData, GameObject projectileOwner)
+        {
+            _hitCharacterList.Clear();
+
+            _hitboxSize = projectileData._hitboxSize;
+            _speed = projectileData._speed;
+            _damage = projectileData._damage;
+            _lifeSpan = projectileData._lifeSpan;
+            _spriteRenderer.color = projectileData._colour;
+
+            _projectileOwner = projectileOwner;
+        }
+
+        public void RotateProjectile(Vector2 direction)
         {
             _moveVector = direction;
-            //if (_isMeleeAttack)
-            //{
-            //    _moveVector -= currentDirection.normalized;
-            //}
+            Debug.Log("Projectile direction: " + direction);
 
             _moveVector *= _speed;
-
-            //If the attack is melee we want it to move at a speed consistent with the player
-            //It looks strange when the player moves as fast as the melee attack
-            //Also gives it more range
 
             //Rotating the projectile to its move direction
             //Uses right as the forward direction, so apply sprites accordingly
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-
         }
 
         private void Update()
@@ -55,7 +61,8 @@ namespace SwapGame.EntityComponents
             }
             else
             {
-                Destroy(gameObject);
+                gameObject.SetActive(false);
+                return;
             }
 
             transform.Translate(_moveVector * Time.deltaTime, Space.World);

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SwapGame.EntityComponents;
+using SwapGame.GameManagement;
+using SwapGame.ScriptableObjects;
 
 namespace SwapGame.CharacterComponents
 {
@@ -14,9 +16,9 @@ namespace SwapGame.CharacterComponents
 
         private float _attackTimer;
 
-        public float _attackDelay;
+        public ProjectileData _projectileData;
 
-        public GameObject _projectilePrefab;
+        public float _attackDelay;
 
         private void Update()
         {
@@ -26,7 +28,7 @@ namespace SwapGame.CharacterComponents
             }
         }
 
-        public void TryNewAttack(Vector3 aimDirection)
+        public void TryNewAttack(Vector2 aimDirection)
         {
             if (_attackTimer > 0)
             {
@@ -34,13 +36,9 @@ namespace SwapGame.CharacterComponents
             }
 
             Debug.Log("Firing projectile");
-            Vector3 projectileSpawnPos = transform.position + (aimDirection * _projectileSpawnDistance);
-            GameObject newProjectile = Instantiate(_projectilePrefab, projectileSpawnPos, Quaternion.Euler(0f, 0f, 0f));
+            Vector2 projectileSpawnPos = transform.position.ConvertToVector2() + (aimDirection * _projectileSpawnDistance);
 
-            Projectile projectileScript = newProjectile.GetComponent<Projectile>();
-            projectileScript._projectileOwner = gameObject;
-
-            projectileScript.AssignMoveDirection(aimDirection);
+            ProjectileManager.Instance.SpawnProjectile(projectileSpawnPos, aimDirection, _projectileData, gameObject);
 
             _attackTimer = _attackDelay;
         }
