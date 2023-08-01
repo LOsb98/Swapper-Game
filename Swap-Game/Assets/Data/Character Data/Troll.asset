@@ -16,5 +16,5 @@ MonoBehaviour:
   _health: 10
   _speed: 1
   _fireRate: 0.8
-  _projectile: {fileID: 6531440593662689013, guid: 61ad8b1e54e69e04d9d19793a5814659, type: 3}
+  _projectile: {fileID: 11400000, guid: 35ff0d7c6a900e04eb1badbe30c740af, type: 2}
   _size: {x: 1, y: 2}

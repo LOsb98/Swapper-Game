@@ -7,7 +7,7 @@ namespace SwapGame.ScriptableObjects
     /// <summary>
     /// <para>Data for character properties.</para>
     /// <para>Includes move speed, health and attack speed.</para>
-    /// <para>Information about projectile properties is stored in the projectile prefab itself, makes them more modular.</para>
+    /// <para>Information about projectile properties is stored in its own class, makes them more modular.</para>
     /// </summary>
     [CreateAssetMenu(menuName = "Characters/New Character")]
     public class Character : ScriptableObject
@@ -20,7 +20,7 @@ namespace SwapGame.ScriptableObjects
         public int _health;
         public int _speed;
         public float _fireRate;
-        public GameObject _projectile;
+        public ProjectileData _projectile;
         public Vector2 _size;
     }
 }

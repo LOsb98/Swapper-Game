@@ -42,7 +42,7 @@ namespace SwapGame.CharacterComponents
             _spriteRenderer.sprite = _currentCharacter._sprite;
             _movement._speed = _currentCharacter._speed;
             _attackScript._attackDelay = _currentCharacter._fireRate;
-            _attackScript._projectilePrefab = _currentCharacter._projectile;
+            _attackScript._projectileData = _currentCharacter._projectile;
 
             boxCollider.size = _currentCharacter._size;
 
