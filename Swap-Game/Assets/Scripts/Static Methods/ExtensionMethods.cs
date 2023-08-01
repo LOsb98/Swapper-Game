@@ -5,15 +5,15 @@ using UnityEngine;
 public static class ExtensionMethods
 {
     /// <summary>
-    /// Convert a Vector2 to a Vector3 (For 2D: Z value will be zero)
+    /// Convert a Vector3 to a Vector2
     /// </summary>
-    public static Vector3 ConvertToVector3(this Vector2 vector2)
+    public static Vector2 ConvertToVector2(this Vector3 vector3)
     {
-        float x = vector2.x;
-        float y = vector2.y;
+        float x = vector3.x;
+        float y = vector3.y;
 
-        Vector3 finalVector3 = new Vector3(x, y, 0f);
+        Vector2 finalVector2 = new Vector2(x, y);
 
-        return finalVector3;
+        return finalVector2;
     }
 }
