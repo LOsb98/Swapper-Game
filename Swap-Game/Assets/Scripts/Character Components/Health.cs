@@ -28,7 +28,6 @@ namespace SwapGame.CharacterComponents
                 {
                     //Check whether the character dying is the player or AI controlled and do its death logic
                     _characterManager.CurrentInput.Die();
-                    //Destroy(gameObject);
                     gameObject.SetActive(false);
                 }
             }
