@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SwapGame.GameManagement;
+using SwapGame.StaticMethods;
 
 namespace SwapGame.Inputs
 {
@@ -10,8 +11,10 @@ namespace SwapGame.Inputs
     public class AIInput : InputBase
     {
         [SerializeField] private float _moveTime;
-
         private float _moveTimer;
+
+        [SerializeField] private float _attackTime = 1f; //Current default value
+        private float _attackTimer;
 
         public override void Step()
         {
@@ -28,11 +31,16 @@ namespace SwapGame.Inputs
 
             }
 
-            int random = Random.Range(1, 5);
-            if (random >= 3)
+            _attackTimer -= Time.deltaTime;
+            if (_attackTimer <= 0) //Do this every second or so, otherwise this would be done every frame and basically means the AI attacks at full speed, which we don't want
             {
-                //Attack attempt successful
-                _attackScript.TryNewAttack(TargetPlayer());
+                _attackTimer = _attackTime;
+                if (MathsStuff.CoinToss())
+                {
+                    Debug.Log("Attempting AI attack");
+                    //Attack attempt successful
+                    _attackScript.TryNewAttack(TargetPlayer());
+                }
             }
         }
 
