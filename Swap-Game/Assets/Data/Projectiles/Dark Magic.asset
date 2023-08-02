@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Dark Magic
   m_EditorClassIdentifier: 
   _hitboxSize: 0.4
-  _speed: 4
+  _speed: 7
   _damage: 2
   _lifeSpan: 2
   _sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
